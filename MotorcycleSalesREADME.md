@@ -9,10 +9,6 @@ The objective was to transform raw transactional data into an interactive busine
 
 > <img width="1111" height="608" alt="image" src="https://github.com/user-attachments/assets/f76e4185-62ba-4cf1-8523-37f05654a715" />
 
-
-### Executive Dashboard
-images/dashboard.png
-
 ---
 
 ## 🎯 Business Objectives
