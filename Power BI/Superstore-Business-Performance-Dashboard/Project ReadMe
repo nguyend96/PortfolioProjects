@@ -1,0 +1,329 @@
+#  Superstore Business Performance Dashboard
+
+**Power BI | DAX | Data Modeling | Time Intelligence | Business Intelligence**
+
+## Project Overview
+
+This project analyzes Superstore sales performance using Power BI and DAX to evaluate revenue, profitability, customer activity, regional performance, returns, and year over year growth.
+
+The solution was developed using a semantic model consisting of a central Orders fact table connected to supporting People and Returns tables. Advanced DAX measures were created to support profitability analysis, return rate reporting, category comparisons, and time intelligence calculations.
+
+---
+
+## Dashboard Preview
+
+> Add dashboard screenshot below
+
+![Dashboard Overview](dashboard-overview.png)
+
+---
+
+## Data Model
+
+The semantic model was built using a star-schema-style structure:
+
+```text
+People
+   │
+   │ Region
+   ▼
+Orders
+   ▲
+   │ Order ID
+   │
+Returns
+```
+
+### Tables
+
+**Orders (Fact Table)**
+
+Contains:
+- Sales
+- Profit
+- Quantity
+- Order Date
+- Region
+- Category
+- Customer Information
+
+**People (Dimension Table)**
+
+Contains:
+- Manager
+- Region
+
+**Returns (Lookup Table)**
+
+Contains:
+- Order ID
+- Returned Status
+
+---
+
+# Executive KPIs
+
+| KPI | Value |
+|------|---------:|
+| Total Sales | $2.33M |
+| Total Profit | $292.30K |
+| Profit Margin | 13% |
+| Total Customers | 804 |
+| Total Orders | 5,111 |
+| Average Order Value | $455.20 |
+
+---
+
+# DAX Measures
+
+## Revenue & Profitability
+
+```DAX
+Total Sales =
+SUM(Orders[Sales])
+```
+
+```DAX
+Total Profit =
+SUM(Orders[Profit])
+```
+
+```DAX
+Profit Margin % =
+DIVIDE([Total Profit],[Total Sales])
+```
+
+Purpose:
+Measures overall business profitability.
+
+---
+
+## Customer Analysis
+
+```DAX
+Customer Count =
+DISTINCTCOUNT(Orders[Customer ID])
+```
+
+```DAX
+Total Orders =
+DISTINCTCOUNT(Orders[Order ID])
+```
+
+```DAX
+Average Order Value =
+DIVIDE([Total Sales],[Total Orders])
+```
+
+Purpose:
+Analyzes customer activity and purchasing behavior.
+
+---
+
+## Category Analysis Using CALCULATE
+
+### Technology Sales
+
+```DAX
+Technology Sales =
+CALCULATE(
+    [Total Sales],
+    Orders[Category] = "Technology"
+)
+```
+
+### Technology Profit
+
+```DAX
+Technology Profit =
+CALCULATE(
+    [Total Profit],
+    Orders[Category] = "Technology"
+)
+```
+
+### Technology Profit Margin
+
+```DAX
+Technology Profit Margin =
+DIVIDE(
+    [Technology Profit],
+    [Technology Sales]
+)
+```
+
+Purpose:
+Evaluates financial performance of Technology products.
+
+---
+
+## Returns Analysis
+
+```DAX
+Returned Orders =
+COUNTROWS(Returns)
+```
+
+```DAX
+Return Rate % =
+DIVIDE(
+    [Returned Orders],
+    [Total Orders]
+)
+```
+
+Purpose:
+Tracks operational performance and customer returns.
+
+---
+
+## Time Intelligence
+
+### Previous Year Sales
+
+```DAX
+Previous Year Sales =
+CALCULATE(
+    [Total Sales],
+    DATEADD(
+        Orders[Order Date],
+        -1,
+        YEAR
+    )
+)
+```
+
+### Year over Year Growth
+
+```DAX
+YoY Growth % =
+DIVIDE(
+    [Total Sales] - [Previous Year Sales],
+    [Previous Year Sales]
+)
+```
+
+### Running Sales
+
+```DAX
+Running Sales =
+CALCULATE(
+    [Total Sales],
+    FILTER(
+        ALL(Orders[Order Date]),
+        Orders[Order Date] <= MAX(Orders[Order Date])
+    )
+)
+```
+
+Purpose:
+Measures business growth and sales trends over time.
+
+---
+
+# Key Business Insights
+
+## Profitability Analysis
+
+Technology generated approximately **$839.89K** in sales and **$146.54K** in profit, resulting in a **17% profit margin**.
+
+Office Supplies generated approximately **$731.89K** in sales and **$126.02K** in profit, also achieving a **17% profit margin**.
+
+Furniture generated approximately **$754.75K** in sales but only **$19.73K** in profit, resulting in a significantly lower **3% profit margin**.
+
+### Key Finding
+
+Revenue alone does not indicate business success. Although Furniture generated substantial revenue, profitability analysis revealed that Technology and Office Supplies delivered significantly stronger financial performance.
+
+---
+
+## Regional Performance
+
+West Region generated:
+
+- Sales: $739.81K
+- Profit: $110.80K
+- Profit Margin: 15%
+
+The West Region exceeded the overall company profit margin of 13%, indicating above-average operational performance.
+
+---
+
+## Technology Performance in the West Region
+
+West Technology generated:
+
+- Sales: $252.77K
+- Profit: $44.41K
+- Profit Margin: 18%
+
+This exceeded both the overall company profit margin and the overall Technology category profit margin.
+
+---
+
+## Returns Analysis
+
+- Returned Orders: 297
+- Return Rate: 6%
+
+Approximately six out of every one hundred orders were returned.
+
+---
+
+## Growth Analysis
+
+- Previous Year Sales: $1.58M
+- YoY Growth: 47%
+
+Sales performance demonstrated strong year over year growth across the reporting period.
+
+---
+
+# Skills Demonstrated
+
+### Power BI
+
+- Interactive Dashboard Development
+- KPI Design
+- Executive Reporting
+- Data Storytelling
+
+### Data Modeling
+
+- Fact and Dimension Tables
+- Relationship Design
+- Semantic Model Development
+
+### DAX
+
+Functions used throughout the project:
+
+```DAX
+SUM()
+DISTINCTCOUNT()
+DIVIDE()
+COUNTROWS()
+CALCULATE()
+DATEADD()
+FILTER()
+ALL()
+MAX()
+```
+
+### Analytical Techniques
+
+- Profitability Analysis
+- Customer Analysis
+- Return Rate Analysis
+- Time Intelligence
+- Year over Year Growth Analysis
+- Regional Performance Analysis
+
+---
+
+# Project Outcome:
+
+Developed a DAX driven Power BI solution capable of analyzing sales performance, profitability, return activity, and business growth trends.
+The project demonstrates the ability to transform raw sales data into executive level insights through data modeling, DAX query development, interactive reporting, and business intelligence analysis.
+
+---
